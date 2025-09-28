@@ -5,6 +5,9 @@ const selectedClassName = 'selected';
 
 const sourceTextNewLineCode = '\n'
 const sourceTextHighlightCode = '\\~'
+const sourceTextShortDelayCode = '\\ds'
+const sourceTextMediumDelayCode = '\\dm'
+const sourceTextLongDelayCode = '\\dl'
 const outputTextNewLineCode = '<br>'
 const outputTextHighlightOpenCode = `<span class="${selectedClassName}">`
 const outputTextHighlightCloseCode = '</span>'
@@ -13,8 +16,11 @@ const outputTextSpaceCode = '&nbsp;'
 let slides = []
 let currentSlideIndex = 0;
 let isAnimationInProgress = false
-const minDelayBetweenCharsMs = 20;
-const maxDelayBetweenCharsMs = 50;
+const minDelayBetweenCharsMs = 10;
+const maxDelayBetweenCharsMs = 30;
+const shortDelayBetweenCharsMs = 150;
+const mediumDelayBetweenCharsMs = 300;
+const longDelayBetweenCharsMs = 600;
 const emptyLineCharacter = '~'
 let previousScreenWidth = window.innerWidth;
 let previousScreenHeight = window.innerHeight;
@@ -256,6 +262,18 @@ function getCharactersToPrint(text) {
             isTextHighlighting = !isTextHighlighting
             text = text.replace(sourceTextHighlightCode, '');
             console.log(`    Text highlight code was detected. ${isTextHighlighting ? 'Enabling' : 'Disabling'} text highlighting...`);
+        } else if (text.startsWith(sourceTextShortDelayCode)) {
+            text = text.replace(sourceTextShortDelayCode, '');
+            charactersToPrint.push(sourceTextShortDelayCode);
+            console.log(`    Short delay code was detected.`);
+        } else if (text.startsWith(sourceTextMediumDelayCode)) {
+            text = text.replace(sourceTextMediumDelayCode, '');
+            charactersToPrint.push(sourceTextMediumDelayCode);
+            console.log(`    Medium delay code was detected.`);
+        } else if (text.startsWith(sourceTextLongDelayCode)) {
+            text = text.replace(sourceTextLongDelayCode, '');
+            charactersToPrint.push(sourceTextLongDelayCode);
+            console.log(`    Long delay code was detected.`);
         } else {
             let sourceCharacter = text[0];
             text = text.replace(sourceCharacter, '');
@@ -293,6 +311,23 @@ async function setSlide(slide) {
     const printedCharacters = []
     for (let characterIndex = 0; characterIndex < charactersToPrint.length; characterIndex++) {
         const sourceCharacter = charactersToPrint[characterIndex];
+
+        // Set the corresponding delay if the output character is equal to one of the special delay codes, 
+        // and skip printing the code
+        if (sourceCharacter === sourceTextShortDelayCode) {
+            console.log(`Short delay code was detected. Setting a delay of ${shortDelayBetweenCharsMs} milliseconds...`)
+            await delay(shortDelayBetweenCharsMs);
+            continue;
+        } else if (sourceCharacter === sourceTextMediumDelayCode) {
+            console.log(`Medium delay code was detected. Setting a delay of ${mediumDelayBetweenCharsMs} milliseconds...`)
+            await delay(mediumDelayBetweenCharsMs);
+            continue;
+        } else if (sourceCharacter === sourceTextLongDelayCode) {
+            console.log(`Long delay code was detected. Setting a delay of ${longDelayBetweenCharsMs} milliseconds...`)
+            await delay(longDelayBetweenCharsMs);
+            continue;
+        }
+
         textToPrint = [...printedCharacters, sourceCharacter, spaceWithCursor].join('');
         if (sourceCharacter === outputTextNewLineCode) {
             currentLineNum++

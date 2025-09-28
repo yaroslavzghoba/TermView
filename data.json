@@ -1,14 +1,14 @@
 [
     {
         "slide_name": "README.md",
-        "text": "Hi there! (⌒ω⌒)ﾉ\n\nTap at the right side or click the right button to go to the next slide.\n\n      [↑]\n   [←][↓]\\~[→]\\~\n"
+        "text": "\\dsHi there! (⌒ω⌒)ﾉ\\dm\n\nTap at the right side or click the right button to go to the next slide.\n\n      [↑]\n   [←][↓]\\~[→]\\~\n"
     },
     {
         "slide_name": "slide0.md",
-        "text": "Yep. It's a presentation right in the terminal interface.\nYou can use this interface for your own presentations, documentation, etc.\n\nThis is cool. Isn't it?"
+        "text": "Yep.\\dl It's a presentation right in the terminal interface.\\dm\nYou can use this interface for your own presentations, documentation, etc.\\dm\n\nThis is cool. Isn't it?"
     },
     {
         "slide_name": "slide1.md",
-        "text": "Write your slides in JSON format. That's easier than you think.\n\nTo get started, edit \\~the `data.json` file\\~. For example:\n\n```json\n[\n    {\n        \"slide_name\": \"README.md\",\n        \"text\": \"Hello World!\"\n    }\n]\n```"
+        "text": "Write your slides in JSON format.\\ds That's easier than you think.\\dm\n\nTo get started, edit \\~the `data.json` file\\~.\\dl For example:\n\n```json\n[\n    {\n        \"slide_name\": \"README.md\",\n        \"text\": \"Hello World!\"\n    }\n]\n```"
     }
 ]
